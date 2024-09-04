@@ -31,7 +31,7 @@ jobs:
 
     - name: Build executable
       run: |
-        pyinstaller --onefile src/main.py  # Adjust this path
+        pyinstaller --onefile ./main.py  # Adjust this path
 
     - name: Upload executable
       uses: actions/upload-artifact@v3
