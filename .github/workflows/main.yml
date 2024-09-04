@@ -13,22 +13,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # You can specify the version you need
+        python-version: '3.9'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller
 
+    - name: List files
+      run: ls -R
+
     - name: Build executable
       run: |
-        pyinstaller --onefile main.py
+        pyinstaller --onefile src/main.py  # Adjust this path
 
     - name: Upload executable
       uses: actions/upload-artifact@v3
       with:
         name: executable
-        path: dist/keylogger
+        path: dist/main  # Adjust this if needed
