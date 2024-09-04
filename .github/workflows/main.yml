@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
@@ -27,14 +27,20 @@ jobs:
         pip install pyinstaller
 
     - name: List files
-      run: ls -R
+      run: dir /s /b
 
     - name: Build executable
       run: |
-        pyinstaller --onefile ./main.py  # Adjust this path
+        pyinstaller --onefile src\main.py  # Adjust this path to use Windows-style slashes
 
     - name: Upload executable
       uses: actions/upload-artifact@v3
       with:
         name: executable
-        path: dist/main  # Adjust this if needed
+        path: dist\main.exe  # Adjust this if needed; PyInstaller default output is `dist\main.exe`
+
+    - name: Clean up
+      run: |
+        rd /s /q build
+        rd /s /q dist
+        del /q *.spec
